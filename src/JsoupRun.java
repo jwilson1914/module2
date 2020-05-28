@@ -3,6 +3,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import com.sun.java.util.jar.pack.Attribute.Layout.Element;
 
 public class JsoupRun{
 
@@ -15,7 +18,17 @@ public class JsoupRun{
         Document doc = Jsoup.connect("https://www.gutenberg.org/files/1065/1065-h/1065-h.htm").get();
 
         //get the actual text from the page, excluding the HTML
-        String text = doc.body().text();
+        //String text = doc.body().text();String text = "" 
+        String text = " " ;
+        		Elements poemElements = doc.select("div.poem"); // THIS LINE OR THE NEXT ONE
+        		Elements poemElements1  = doc.getElementsByClass("poem");  // THIS LINE OR THE PREV ONE NOT BOTH
+        		for (org.jsoup.nodes.Element thisElement : poemElements1) {
+        		   text = text + thisElement; // However you add more words to text variablee
+        }
+
+        String test = "eo21jüdjüqw=realString";
+        test = test.replaceAll(".+=", "");
+        System.out.println(test);
 
         System.out.println("Counting words...");
         //bufferedreader to count words
@@ -48,7 +61,7 @@ public class JsoupRun{
         int i = 0;
         int maxWordsToDisplay = 20;
 
-        String[] wordsToIgnore = {"the", "and", "a", ""};
+        String[] wordsToIgnore = {"the", "and", "a", "", "x","p","I","br","i"};
 
         for (Word word : wordsToShow) {
             if (i >= maxWordsToDisplay) { //only showing the frequency of 20 words
