@@ -5,7 +5,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import com.sun.java.util.jar.pack.Attribute.Layout.Element;
 
 public class JsoupRun{
 
@@ -34,8 +33,45 @@ public class JsoupRun{
         //bufferedreader to count words
         BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8))));
         String line;
+
+        Map<String, Long> counts = new HashMap<>();
+
         while ((line = reader.readLine()) != null) {
-            String[] words = line.split("[^A-ZÃ…Ã„Ã–a-zÃ¥Ã¤Ã¶]+");
+
+        String[] words = line.split("[\\s.;,?':!-()\"]+");
+
+        for (String word : words) {
+
+      word = word.trim();
+
+       if (word.length() > 0) {
+       if (counts.containsKey(word)) {
+
+        	counts.put(word, counts.get(word) + 1);
+
+        		} else {
+
+        	counts.put(word, 1L);
+
+        }
+
+        }
+
+        }
+
+        }
+
+        for (Map.Entry<String, Long> entry : counts.entrySet()) {
+        System.out.println(entry.getKey() + ": " + entry.getValue());
+
+          
+
+        }
+
+        reader.close();
+        String line1;
+        while ((line1 = reader.readLine()) != null) {
+            String[] words = line1.split("[^A-ZÃ…Ã„Ã–a-zÃ¥Ã¤Ã¶]+");
            
             for (String word : words) {
                 if (" ".equals(word)) {
